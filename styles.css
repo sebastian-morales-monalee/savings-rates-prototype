@@ -1,0 +1,25 @@
+body {
+  min-height: 100vh;
+  background:
+    linear-gradient(135deg, rgba(13, 110, 253, 0.08), rgba(25, 135, 84, 0.08)),
+    #f7f9fc;
+}
+
+.app-shell {
+  max-width: 880px;
+}
+
+.card {
+  border: 1px solid rgba(33, 37, 41, 0.08);
+  border-radius: 8px;
+}
+
+.json-box {
+  min-height: 140px;
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #17202a;
+  color: #e8f0f7;
+  font-size: 0.95rem;
+}
