@@ -55,3 +55,17 @@ window.APP_CONFIG = {
 ```
 
 Si esta pagina se publica en GitHub Pages, el backend en Hostinger debe estar en HTTPS para evitar bloqueo por mixed content.
+
+## Publicar en GitHub Pages
+
+Este repositorio incluye un workflow en `.github/workflows/deploy-pages.yml` para publicar la web estatica con GitHub Actions.
+
+En GitHub, configura Pages asi:
+
+```txt
+Settings -> Pages -> Source: GitHub Actions
+```
+
+Cada push a `main` va a desplegar automaticamente la web.
+
+Tambien se incluye `.nojekyll` para indicar que GitHub Pages debe servir los archivos estaticos tal como estan, sin procesarlos con Jekyll.
