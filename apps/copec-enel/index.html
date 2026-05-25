@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simulador de ahorros energéticos con sistema solar | Copec Flux + ENEL</title>
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <meta name="theme-color" content="#7b12d6">
+    <meta
+      name="description"
+      content="Simulador de ahorros energéticos con sistema solar para analizar boletas ENEL, consumo eléctrico, tarifas, ahorros proyectados y créditos por inyección a la red."
+    >
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Simulador de ahorros energéticos con sistema solar">
+    <meta
+      property="og:description"
+      content="Analiza boletas ENEL o carga tus datos manualmente para estimar consumo, producción solar, ahorros energéticos y beneficios de largo plazo."
+    >
+    <meta property="og:image" content="android-chrome-192x192.png">
+    <meta property="og:image:alt" content="Ícono corporativo del simulador de ahorros energéticos">
+    <meta property="og:site_name" content="Copec Flux + ENEL">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Simulador de ahorros energéticos con sistema solar">
+    <meta
+      name="twitter:description"
+      content="Simula ahorros energéticos con sistema solar a partir de boletas ENEL o datos ingresados manualmente."
+    >
+    <meta name="twitter:image" content="android-chrome-192x192.png">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="container py-5">
+      <section class="mx-auto app-shell">
+        <header class="brand-strip card shadow-sm mb-4">
+          <div class="brand-strip__inner">
+            <div class="brand-strip__logos">
+              <img
+                src="images/Artemis Logo.png"
+                alt="Artemis"
+                class="brand-strip__logo brand-strip__logo--artemis"
+              >
+              <img
+                src="images/copec-flux.jpg"
+                alt="Copec Flux"
+                class="brand-strip__logo brand-strip__logo--copec"
+              >
+              <img
+                src="images/enel-logo.png"
+                alt="Enel"
+                class="brand-strip__logo brand-strip__logo--enel"
+              >
+            </div>
+            <div class="brand-strip__title-wrap">
+              <h1 class="brand-strip__title mb-0">Simulador de ahorros energéticos con sistema solar - ENEL</h1>
+            </div>
+          </div>
+        </header>
+
+        <form id="tariff-form" class="card shadow-sm mb-3">
+          <div class="card-body">
+            <div class="row g-3 align-items-end">
+              <!-- <div class="col-12">
+                <h2 class="h5 mb-1">Parámetros comunes</h2>
+                <p class="text-secondary small mb-0">
+                  Estos inputs se comparten entre el modo PDF y el modo manual.
+                </p>
+              </div> -->
+              <div class="col-12 col-md-4 col-xl-3">
+                <label for="annualSolarProductionKwh" class="form-label">
+                  Producción Solar Anual (kWh)
+                </label>
+                <input
+                  class="form-control"
+                  id="annualSolarProductionKwh"
+                  name="annualSolarProductionKwh"
+                  type="number"
+                  min="0"
+                  step="1"
+                  value="6000"
+                  required
+                >
+              </div>
+              <div class="col-12 col-md-4 col-xl-3">
+                <label for="solarSystemAnnualDegradation" class="form-label">
+                  Degradación Solar Anual
+                </label>
+                <input
+                  class="form-control"
+                  id="solarSystemAnnualDegradation"
+                  name="solarSystemAnnualDegradation"
+                  type="number"
+                  min="0"
+                  step="0.0001"
+                  value="0.005"
+                  required
+                >
+              </div>
+              <div class="col-12 col-md-4 col-xl-3">
+                <label for="termYears" class="form-label">
+                  Años de Plazo
+                </label>
+                <input
+                  class="form-control"
+                  id="termYears"
+                  name="termYears"
+                  type="number"
+                  min="1"
+                  step="1"
+                  value="25"
+                  required
+                >
+              </div>
+              <div class="col-12 col-md-4 col-xl-3">
+                <label for="annualUtilityRateEscalator" class="form-label">
+                  Escalador Anual Tarifa
+                </label>
+                <input
+                  class="form-control"
+                  id="annualUtilityRateEscalator"
+                  name="annualUtilityRateEscalator"
+                  type="number"
+                  step="0.0001"
+                  value="0.0399"
+                  required
+                >
+              </div>
+              <div class="col-12 col-md-4 col-xl-3">
+                <label for="tarifaInyeccion" class="form-label">
+                  <a
+                    href="https://www.enel.cl/content/dam/enel-cl/es/personas/informacion-de-utilidad/tarifas-y-reglamentos/tarifas/tarifas-reguladas/2026/Enel%20Distribuci%C3%B3n%20Chile%20SA._Tarifas%20Suministro%20El%C3%A9ctrico%2024T_%20VAD%205T%20Marzo%20de%202026.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Tarifa de Inyeccion (CLP$/kWh)
+                  </a>
+                </label>
+                <input
+                  class="form-control"
+                  id="tarifaInyeccion"
+                  name="tarifa_inyeccion"
+                  type="number"
+                  min="0"
+                  step="0.0001"
+                  value="105.0"
+                  required
+                >
+              </div>
+              <div class="col-12 col-md-4 col-xl-3">
+                <label for="annualInjectionTariffEscalator" class="form-label">
+                  Escalador Anual Tarifa Inyección
+                </label>
+                <input
+                  class="form-control"
+                  id="annualInjectionTariffEscalator"
+                  name="annualInjectionTariffEscalator"
+                  type="number"
+                  min="0"
+                  step="0.0001"
+                  value="0.01"
+                  required
+                >
+              </div>
+              <div class="col-12">
+                <div class="mode-switch">
+                  <span class="form-label d-block mb-2">Modo de carga</span>
+                  <div class="btn-group mode-switch__group" role="group" aria-label="Modo de carga ENEL">
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="inputMode"
+                      id="modePdf"
+                      value="pdf"
+                      autocomplete="off"
+                    >
+                    <label class="btn btn-outline-primary" for="modePdf">Cargar boleta PDF</label>
+
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="inputMode"
+                      id="modeManual"
+                      value="manual"
+                      autocomplete="off"
+                      checked
+                    >
+                    <label class="btn btn-outline-primary" for="modeManual">Cargar datos manualmente</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="pdf-panel" class="mode-panel mt-4">
+              <div class="row g-3 align-items-end">
+                <div class="col-12">
+                  <h3 class="h6 mb-1">Formulario 1: carga por boleta PDF</h3>
+                  <!-- <p class="text-secondary small mb-0">
+                    Usa el mismo endpoint enviando la boleta ENEL en PDF.
+                  </p> -->
+                </div>
+                <div class="col-12">
+                  <label for="pdfFile" class="form-label">Boleta PDF ENEL</label>
+                  <input
+                    class="form-control"
+                    id="pdfFile"
+                    name="pdfFile"
+                    type="file"
+                    accept="application/pdf,.pdf"
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div id="manual-panel" class="mode-panel mt-4 d-none">
+              <div class="row g-3 align-items-end">
+                <div class="col-12">
+                  <h3 class="h6 mb-1">Formulario 2: carga manual del payload ENEL</h3>
+                  <p class="text-secondary small mb-0">
+                    La información que aparece por defecto corresponde a una boleta real de ENEL.
+                    <a href="boletas_ejemplo/Boleta1.pdf" target="_blank" rel="noopener noreferrer">Ver boleta</a>
+                    <a href="boletas_ejemplo/boletas_BT1.zip" download="boletas_BT1.zip">Descargar boletas 'Tarifa BT1'</a>
+                    
+                  </p>
+                </div>
+                <div class="col-12 col-md-4">
+                  <label for="manualComuna" class="form-label">Comuna</label>
+                  <select id="manualComuna" class="form-select" name="comuna">
+                    <option value="">Selecciona una comuna</option>
+                    <option value="Cerrillos">Cerrillos</option>
+                    <option value="Cerro Navia">Cerro Navia</option>
+                    <option value="Colina">Colina</option>
+                    <option value="Conchalí">Conchalí</option>
+                    <option value="Estación Central">Estación Central</option>
+                    <option value="Huechuraba">Huechuraba</option>
+                    <option value="Independencia">Independencia</option>
+                    <option value="La Cisterna">La Cisterna</option>
+                    <option value="La Florida">La Florida</option>
+                    <option value="La Granja">La Granja</option>
+                    <option value="La Reina">La Reina</option>
+                    <option value="Lampa">Lampa</option>
+                    <option value="Las Condes">Las Condes</option>
+                    <option value="Lo Barnechea">Lo Barnechea</option>
+                    <option value="Lo Espejo">Lo Espejo</option>
+                    <option value="Lo Prado">Lo Prado</option>
+                    <option value="Macul">Macul</option>
+                    <option value="Maipú">Maipú</option>
+                    <option value="Pedro Aguirre Cerda">Pedro Aguirre Cerda</option>
+                    <option value="PENALOLEN" selected>Peñalolén</option>
+                    <option value="Providencia">Providencia</option>
+                    <option value="Pudahuel">Pudahuel</option>
+                    <option value="Quilicura">Quilicura</option>
+                    <option value="Quinta Normal">Quinta Normal</option>
+                    <option value="Recoleta">Recoleta</option>
+                    <option value="Renca">Renca</option>
+                    <option value="San Joaquín">San Joaquín</option>
+                    <option value="San Miguel">San Miguel</option>
+                    <option value="San Ramón">San Ramón</option>
+                    <option value="Santiago">Santiago</option>
+                    <option value="Tiltil (1)">Tiltil (1)</option>
+                    <option value="Tiltil (2)">Tiltil (2)</option>
+                    <option value="Vitacura">Vitacura</option>
+                    <option value="Ñuñoa">Ñuñoa</option>
+                  </select>
+                </div>
+                <div class="col-12 col-md-4">
+                  <label for="manualEtr" class="form-label">ETR</label>
+                  <select id="manualEtr" class="form-select" name="etr">
+                    <option value="">Selecciona un ETR</option>
+                    <option value="T1">T1</option>
+                    <option value="T2">T2</option>
+                    <option value="T3">T3</option>
+                    <option value="T4">T4</option>
+                    <option value="T5">T5</option>
+                    <option value="T6" selected>T6</option>
+                  </select>
+                </div>
+                <div class="col-12 col-md-4">
+                  <label for="manualTariffType" class="form-label">Tipo de tarifa</label>
+                  <select id="manualTariffType" class="form-select" name="tipo_tarifa">
+                    <option value="BT1" selected>BT1</option>
+                  </select>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label for="manualPeriodStart" class="form-label">Periodo lectura inicio</label>
+                  <input id="manualPeriodStart" class="form-control" name="periodo_lectura_inicio" type="date" value="2025-06-11">
+                </div>
+                <div class="col-12 col-md-6">
+                  <label for="manualPeriodEnd" class="form-label">Periodo lectura fin</label>
+                  <input id="manualPeriodEnd" class="form-control" name="periodo_lectura_fin" type="date" value="2025-07-09">
+                </div>
+                <div class="col-12">
+                  <label class="form-label d-block mb-2">Consumo últimos 12 meses (kWh)</label>
+                  <div class="month-input-grid">
+                    <div>
+                      <label for="manualMonth1" class="form-label small">Enero</label>
+                      <input id="manualMonth1" class="form-control" type="number" min="0" step="0.01" data-month-index="1" value="1222">
+                    </div>
+                    <div>
+                      <label for="manualMonth2" class="form-label small">Febrero</label>
+                      <input id="manualMonth2" class="form-control" type="number" min="0" step="0.01" data-month-index="2" value="1160">
+                    </div>
+                    <div>
+                      <label for="manualMonth3" class="form-label small">Marzo</label>
+                      <input id="manualMonth3" class="form-control" type="number" min="0" step="0.01" data-month-index="3" value="888">
+                    </div>
+                    <div>
+                      <label for="manualMonth4" class="form-label small">Abril</label>
+                      <input id="manualMonth4" class="form-control" type="number" min="0" step="0.01" data-month-index="4" value="717">
+                    </div>
+                    <div>
+                      <label for="manualMonth5" class="form-label small">Mayo</label>
+                      <input id="manualMonth5" class="form-control" type="number" min="0" step="0.01" data-month-index="5" value="498">
+                    </div>
+                    <div>
+                      <label for="manualMonth6" class="form-label small">Junio</label>
+                      <input id="manualMonth6" class="form-control" type="number" min="0" step="0.01" data-month-index="6" value="445">
+                    </div>
+                    <div>
+                      <label for="manualMonth7" class="form-label small">Julio</label>
+                      <input id="manualMonth7" class="form-control" type="number" min="0" step="0.01" data-month-index="7" value="301">
+                    </div>
+                    <div>
+                      <label for="manualMonth8" class="form-label small">Agosto</label>
+                      <input id="manualMonth8" class="form-control" type="number" min="0" step="0.01" data-month-index="8" value="445">
+                    </div>
+                    <div>
+                      <label for="manualMonth9" class="form-label small">Septiembre</label>
+                      <input id="manualMonth9" class="form-control" type="number" min="0" step="0.01" data-month-index="9" value="442">
+                    </div>
+                    <div>
+                      <label for="manualMonth10" class="form-label small">Octubre</label>
+                      <input id="manualMonth10" class="form-control" type="number" min="0" step="0.01" data-month-index="10" value="752">
+                    </div>
+                    <div>
+                      <label for="manualMonth11" class="form-label small">Noviembre</label>
+                      <input id="manualMonth11" class="form-control" type="number" min="0" step="0.01" data-month-index="11" value="858">
+                    </div>
+                    <div>
+                      <label for="manualMonth12" class="form-label small">Diciembre</label>
+                      <input id="manualMonth12" class="form-control" type="number" min="0" step="0.01" data-month-index="12" value="862">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-3 mt-1">
+              <div class="col-12">
+                <button id="submit-button" class="btn btn-primary w-100" type="submit">
+                  Analizar boleta ENEL con solar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div id="status" class="alert alert-info" role="status">
+          Elige el modo de carga, completa los campos requeridos y ejecuta el análisis.
+        </div>
+
+        <section id="result" class="row g-3 mb-3 d-none" aria-live="polite">
+          <div class="col-12 col-md-3">
+            <article class="card h-100 shadow-sm">
+              <div class="card-body">
+                <p class="text-secondary small mb-1">Produccion solar anual</p><br>
+                <p id="annualSolarProduction" class="fs-3 fw-bold mb-0">--</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-12 col-md-3">
+            <article class="card h-100 shadow-sm">
+              <div class="card-body">
+                <p class="text-secondary small mb-1">Consumo total anual</p><br>
+                <p id="annualConsumptionTotal" class="fs-3 fw-bold mb-0">--</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-12 col-md-3">
+            <article class="card h-100 shadow-sm">
+              <div class="card-body">
+                <p class="text-secondary small mb-1">Ahorros Totales Largo Plazo</p><br>
+                <p id="estimatedFullTermTotalSavings" class="fs-3 fw-bold mb-0">--</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-12 col-md-3">
+            <article class="card h-100 shadow-sm">
+              <div class="card-body">
+                <p class="text-secondary small mb-1">Ganancias Exportación Energía Largo Plazo</p>
+                <p id="estimatedFullTermTotalNemCredit" class="fs-3 fw-bold mb-0">--</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-12">
+            <article class="card h-100 shadow-sm">
+              <div class="card-body">
+                <p class="text-secondary small mb-1">Nombre Tarifa</p>
+                <p id="utilityRateSchedule" class="fs-5 fw-semibold mb-0">--</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="charts-section" class="row g-3 mt-1 d-none">
+          <div class="col-12">
+            <article class="card shadow-sm chart-card">
+              <div class="card-header bg-white fw-semibold">
+                Grafica 1 - Costos mensuales ($CLP)
+              </div>
+              <div class="card-body">
+                <canvas id="cost-chart" aria-label="Grafica de costos mensuales" role="img"></canvas>
+              </div>
+            </article>
+          </div>
+          <div class="col-12">
+            <article class="card shadow-sm chart-card">
+              <div class="card-header bg-white fw-semibold">
+                Grafica 2 - Consumos mensuales (kWh)
+              </div>
+              <div class="card-body">
+                <canvas id="consumption-chart" aria-label="Grafica de consumos mensuales" role="img"></canvas>
+              </div>
+            </article>
+          </div>
+          <div class="col-12">
+            <article class="card shadow-sm chart-card">
+              <div class="card-header bg-white fw-semibold">
+                Grafica 3 - Proyeccion financiera del plazo completo
+              </div>
+              <div class="card-body">
+                <canvas id="full-term-cost-chart" aria-label="Grafica de plazo completo asociada a costos y tarifa" role="img"></canvas>
+              </div>
+            </article>
+          </div>
+          <div class="col-12">
+            <article class="card shadow-sm chart-card">
+              <div class="card-header bg-white fw-semibold">
+                Grafica 4 - Proyeccion energetica del plazo completo
+              </div>
+              <div class="card-body">
+                <canvas id="full-term-energy-chart" aria-label="Grafica de plazo completo asociada a consumo y produccion energetica" role="img"></canvas>
+              </div>
+            </article>
+          </div>
+          <div class="col-12">
+            <article class="card shadow-sm chart-card">
+              <div class="card-header bg-white fw-semibold">
+                Grafica 5 - Utility rates mensuales
+              </div>
+              <div class="card-body">
+                <canvas id="utility-rate-chart" aria-label="Grafica de utility rates mensuales con y sin solar" role="img"></canvas>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="card shadow-sm mt-3 d-none">
+          <div class="card-header bg-white fw-semibold">Respuesta JSON</div>
+          <div class="card-body">
+            <pre id="json-output" class="json-box mb-0">{}</pre>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

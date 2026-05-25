@@ -1,0 +1,125 @@
+body {
+  min-height: 100vh;
+  background:
+    linear-gradient(135deg, rgba(13, 110, 253, 0.08), rgba(25, 135, 84, 0.08)),
+    #f7f9fc;
+}
+
+.app-shell {
+  max-width: 1180px;
+}
+
+.brand-strip {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.brand-strip__inner {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  padding: 1.25rem 1.5rem;
+  min-height: 118px;
+}
+
+.brand-strip__logos {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  flex-shrink: 0;
+}
+
+.brand-strip__logo {
+  display: block;
+  max-height: 72px;
+  width: auto;
+  object-fit: contain;
+}
+
+.brand-strip__logo--artemis {
+  max-width: min(100%, 360px);
+}
+
+.brand-strip__logo--copec {
+  max-width: min(100%, 220px);
+}
+
+.brand-strip__logo--enel {
+  max-width: min(100%, 150px);
+}
+
+.brand-strip__title-wrap {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-width: 0;
+}
+
+.brand-strip__title {
+  font-size: clamp(1.35rem, 1.8vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1f2a44;
+}
+
+.card {
+  border: 1px solid rgba(33, 37, 41, 0.08);
+  border-radius: 8px;
+}
+
+.mode-switch__group .btn {
+  min-width: 180px;
+}
+
+.mode-panel {
+  border-top: 1px solid rgba(33, 37, 41, 0.08);
+  padding-top: 1.25rem;
+}
+
+.month-input-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem 1rem;
+}
+
+.json-box {
+  min-height: 140px;
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #17202a;
+  color: #e8f0f7;
+  font-size: 0.95rem;
+}
+
+.chart-card canvas {
+  width: 100% !important;
+  min-height: 340px;
+}
+
+@media (max-width: 767.98px) {
+  .brand-strip__inner {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .brand-strip__logos {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .brand-strip__logo--artemis,
+  .brand-strip__logo--copec,
+  .brand-strip__logo--enel {
+    max-width: 100%;
+  }
+
+  .brand-strip__title {
+    font-size: 1.25rem;
+  }
+
+  .month-input-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,134 @@
+﻿<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Demo Web Plana - Tarifa</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="container py-5">
+      <section class="mx-auto app-shell">
+        <header class="mb-4">
+          <p class="text-uppercase fw-semibold text-primary small mb-2">HTML CSS JS plano</p>
+          <h1 class="h2 fw-bold mb-2">Consumo desde backend Node.js</h1>
+          <p class="text-secondary mb-0">
+            Esta pagina llama al proxy Node.js, y el proxy consulta la Lambda externa.
+          </p>
+        </header>
+
+        <form id="tariff-form" class="card shadow-sm mb-3">
+          <div class="card-body">
+            <div class="row g-3 align-items-end">
+              <div class="col-12">
+                <label class="form-label d-block">Tipo de consulta</label>
+                <div class="btn-group w-100" role="group" aria-label="Tipo de consulta">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="queryMode"
+                    id="modeConsumption"
+                    value="yearlyConsumptionKwh"
+                    autocomplete="off"
+                    checked
+                  >
+                  <label class="btn btn-outline-primary" for="modeConsumption">
+                    Consumo anual kWh
+                  </label>
+
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="queryMode"
+                    id="modeAnnualCost"
+                    value="annualCost"
+                    autocomplete="off"
+                  >
+                  <label class="btn btn-outline-primary" for="modeAnnualCost">
+                    Costo anual
+                  </label>
+                </div>
+              </div>
+              <div class="col-12 col-md-7">
+                <label for="masterTariffId" class="form-label">Master Tariff ID</label>
+                <input
+                  class="form-control"
+                  id="masterTariffId"
+                  name="masterTariffId"
+                  value="20000000000000"
+                  required
+                >
+              </div>
+              <div class="col-12 col-md-5">
+                <label id="calculationValueLabel" for="calculationValue" class="form-label">
+                  Consumo anual kWh
+                </label>
+                <input
+                  class="form-control"
+                  id="calculationValue"
+                  name="calculationValue"
+                  type="number"
+                  min="1"
+                  step="1"
+                  value="12000"
+                  required
+                >
+              </div>
+              <div class="col-12">
+                <button id="submit-button" class="btn btn-primary w-100" type="submit">
+                  Consultar backend Node.js
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div id="status" class="alert alert-info" role="status">
+          Preparando consulta...
+        </div>
+
+        <section id="result" class="row g-3 mb-3 d-none" aria-live="polite">
+          <div class="col-12 col-md-4">
+            <article class="card h-100 shadow-sm">
+              <div class="card-body">
+                <p class="text-secondary small mb-1">kWh mensual</p>
+                <p id="kwh" class="fs-3 fw-bold mb-0">--</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-12 col-md-4">
+            <article class="card h-100 shadow-sm">
+              <div class="card-body">
+                <p class="text-secondary small mb-1">Costo total</p>
+                <p id="totalCost" class="fs-3 fw-bold mb-0">--</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-12 col-md-4">
+            <article class="card h-100 shadow-sm">
+              <div class="card-body">
+                <p class="text-secondary small mb-1">Utility rate</p>
+                <p id="utilityRate" class="fs-3 fw-bold mb-0">--</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="card shadow-sm">
+          <div class="card-header bg-white fw-semibold">Respuesta JSON</div>
+          <div class="card-body">
+            <pre id="json-output" class="json-box mb-0">{}</pre>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
